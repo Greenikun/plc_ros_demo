@@ -31,3 +31,7 @@
 - Verify message to OpenPLC
 - Output publishes back to MQTT
 - ROS Triggers sim action
+
+
+##Pipeline Diagram:
+- <img width="210" height="362" alt="image" src="https://github.com/user-attachments/assets/d6b1535d-953c-48c5-a950-48ea8b72e898" />
