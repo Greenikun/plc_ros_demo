@@ -30,33 +30,7 @@ An end‑to‑end automation pipeline where a **PLC (OpenPLC)** manages safety a
 ---
 
 ## Architecture
-```
-+---------+        +-------------------+        +-----------------+
-| Node-RED| -----> |  MQTT broker      | -----> | mqtt_input_     |
-|  (UI)   |  plc/  |  (Mosquitto)      |  plc/ | bridge.py       |
-| (button)| input  +-------------------+ input +-----------------+
-+---------+                                            |
-                                                       v
-                                              /tmp/input.json
-                                                       |
-                                                       v
-                                         +--------------------------+
-                                         | OpenPLC Runtime          |
-                                         |  Python SubModule (PSM)  |
-                                         |  hardware_layer.py       |
-                                         |    reads inputs          |
-                                         |    writes outputs        |
-                                         +------------+-------------+
-                                                      |
-                                              /tmp/output.json
-                                                      |
-                                                      v
-+-----------------+      +-------------------+      +--------------------+
-| mqtt_output_    | ---> |  MQTT broker      | ---> | ROS 2 subscriber   |
-| bridge.py       | plc/ |  (Mosquitto)      | plc/ | (translates to ROS |
-| (change detect) |output+-------------------+output|   topics/actions)  |
-+-----------------+                                    +-----------------+
-```
+<img width="779" height="512" alt="image" src="https://github.com/user-attachments/assets/92e9623d-f788-4eac-ae01-5314aa00371c" />
 
 **Key conventions**
 - JSON keys for PLC vars include a leading `%` (e.g., `"%IX0.0"`, `"%QX0.0"`).
