@@ -253,12 +253,17 @@ For Gazebo/MoveIt2, subscribe to `plc/qx0_0` to trigger a visual/sim action (e.g
 ---
 
 ## Roadmap
-- ✅ End‑to‑end PLC ↔ MQTT ↔ ROS loop with echo logic
-- ☐ Containerize bridges and PSM helper (optional sidecar)
-- ☐ ROS node for bi‑directional MQTT (inputs + outputs)
-- ☐ CI task to lint bridges (ruff/black) and validate JSON schemas
-- ☐ Add unit tests for bridge change‑detection logic
-- ☐ Expand ladder program and ROS demo (MoveIt2)
+- Install Docker, MQTT, OpenPLC, ROS2 Humble, colcon, Gazebo, and MoveIt2.
+- Compose MQTT core, confirm Docker MQTT is running
+- Design the MQTT IO communication network. Deciding JSON schema and topics; verify with sample JSON payloads with address keys accepted by bridges without fail.
+- Create MQTT bridges. Runn input bridge and output bridge. Verify published address on the topic is atomically writing to the JSONs. Verify changes to the output JSON
+- Design PLC IO Logic
+- Configure OpenPLC Runtime PSM, verify PSM is actually making the changes to the simulated hardware. (NOT JSON SCRITPS ARBITRARILY CHANGING JSON TEXT)
+- Build the Node-RED UI, verify buttons trigger the logic
+- Create one way ROS2 node to subscribe to output topic and publish a ROS topic.
+- Add ROS2 to PLC path (two-way), allowing ROS to publish commands to input topic.
+- Design custom automated robot
+- Run tests and rollout
 
 ---
 
