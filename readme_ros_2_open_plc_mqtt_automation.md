@@ -70,7 +70,7 @@ An end‑to‑end automation pipeline where a **PLC (OpenPLC)** manages safety a
 ---
 
 ## Repo layout
-Suggested layout (adjust to your actual paths):
+Suggested layout:
 ```
 automation_project/
 ├─ docker/
@@ -134,7 +134,7 @@ services:
    ```
 3. **Configure OpenPLC**
    - In Web UI → **Hardware → Python SubModule**, paste `openplc/hardware_layer.py`.
-   - In your ladder project, map `%IX0.0` to `%QX0.0` (simple echo for demo).
+   - In ladder project, map `%IX0.0` to `%QX0.0` (simple echo for demo).
    - Start the **Runtime** with your program.
 4. **Click the Node‑RED button** (publishes to `plc/input`).
 5. **Observe**: `%QX0.0` change appears on `plc/output`, ROS reacts.
@@ -189,11 +189,11 @@ mosquitto_sub -h localhost -t plc/output -v
 ---
 
 ## Testing the loop
-1. In your ladder logic, wire `%IX0.0` to `%QX0.0`.
+1. In ladder logic, wire `%IX0.0` to `%QX0.0`.
 2. Publish `{"%IX0.0": true}` to `plc/input`.
 3. The PSM sets `IX0.0`, PLC logic turns `QX0.0` on, PSM writes it to `/tmp/output.json`.
 4. The output bridge detects the change and publishes `{"%QX0.0": true}` to `plc/output`.
-5. Your ROS node reacts.
+5. ROS node reacts.
 
 > If `%QX0.0` never changes, verify:
 > - OpenPLC program is running and addresses match.
@@ -239,8 +239,8 @@ For Gazebo/MoveIt2, subscribe to `plc/qx0_0` to trigger a visual/sim action (e.g
 
 ---
 
-## Troubleshooting
-- **Port 1883 conflict**: Stop any non‑Docker Mosquitto instance so your Compose broker can bind.
+## Troubleshooting & Workarounds
+- **Port 1883 conflict**: Stop any non‑Docker Mosquitto instance so compose broker can bind.
 - **OpenPLC web DB corruption**: Recreate `openplc.db` if needed.
   ```bash
   cd ~/OpenPLC_v3/webserver/core
@@ -269,7 +269,7 @@ For Gazebo/MoveIt2, subscribe to `plc/qx0_0` to trigger a visual/sim action (e.g
 
 ---
 
-## Project history (from our chats)
+## Project history
 - **2025‑07‑24** – Planned integration of ROS 2, OpenPLC, Node‑RED, MQTT via Docker; agreed that OpenPLC programs are uploaded (not edited) in the web editor.
 - **2025‑08‑08** – Finalized system design: topics `plc/input` & `plc/output`, JSON ↔ PSM glue, Docker layout; resolved a port **1883** conflict by preferring the Docker broker.
 - **2025‑08‑09** – Implemented bridges and PSM: atomic writes, key normalization, `%`‑prefixed JSON, `OUTPUT_VARS` export list; verified input → output flow.
@@ -289,10 +289,9 @@ For Gazebo/MoveIt2, subscribe to `plc/qx0_0` to trigger a visual/sim action (e.g
 ---
 
 ## License
-MIT (or your preference). Update this section before publishing.
 
 ---
 
 ### Acknowledgements
-Thanks to the OpenPLC and ROS communities. This project is part of a personal **Automation Project Resume Booster** initiative.
+Thanks to the OpenPLC, NodeRED, MQTT, and ROS communities.
 
